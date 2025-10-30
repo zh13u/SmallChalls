@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ping-Trust — CTF</title>
+
+  <!-- Bootstrap + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="container-fluid d-flex flex-column align-items-center justify-content-center vh-100">
+    <!-- Header -->
+    <div class="text-center mb-5 fade-in">
+      <div class="icon-wrapper mb-4">
+        <i class="fa-solid fa-network-wired"></i>
+        <div class="icon-pulse"></div>
+      </div>
+      <h1 class="title mb-2">Ping-Trust</h1>
+      <p class="subtitle">Command Injection Challenge</p>
+      <div class="challenge-badge">
+        <i class="fa-solid fa-flag me-2"></i>CTF Challenge
+      </div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="glass-card shadow-lg fade-up">
+      <!-- Input Section -->
+      <div class="card-header-section mb-4">
+        <h3 class="section-title">
+          <i class="fa-solid fa-terminal me-2"></i>
+          Network Diagnostic Tool
+        </h3>
+        <p class="section-desc">Test network connectivity with ping</p>
+      </div>
+
+      <form id="pingForm" class="ping-form">
+        <div class="input-wrapper">
+          <i class="input-icon fa-solid fa-server"></i>
+          <input 
+            id="target" 
+            name="target" 
+            class="ping-input" 
+            placeholder="Enter IP or hostname (e.g., 8.8.8.8)" 
+            required
+            autocomplete="off"
+          >
+        </div>
+        <button id="btnPing" class="ping-btn" type="submit">
+          <span class="btn-content">
+            <i class="fa-solid fa-paper-plane me-2"></i>
+            Execute Ping
+          </span>
+          <span class="btn-loader d-none">
+            <i class="fa-solid fa-spinner fa-spin me-2"></i>
+            Processing...
+          </span>
+        </button>
+      </form>
+
+      <!-- Results Section -->
+      <div id="resultsSection" class="results-section d-none">
+        <div class="results-header">
+          <i class="fa-solid fa-code-branch me-2"></i>
+          <span>Command Output</span>
+        </div>
+        <div class="result-box-wrapper">
+          <pre id="output" class="result-box"></pre>
+        </div>
+      </div>
+
+      <!-- History Section -->
+      {% if attempts %}
+      <div class="history-section mt-4">
+        <div class="results-header">
+          <i class="fa-solid fa-clock-rotate-left me-2"></i>
+          <span>Recent Attempts</span>
+        </div>
+        <div class="history-list">
+          {% for attempt in attempts[:5] %}
+          <div class="history-item">
+            <div class="history-header">
+              <span class="history-time">
+                <i class="fa-solid fa-clock me-1"></i>
+                {{ attempt.time }}
+              </span>
+              <span class="history-target">
+                <i class="fa-solid fa-target me-1"></i>
+                {{ attempt.target }}
+              </span>
+            </div>
+            <div class="history-output">{{ attempt.snippet }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Footer Info -->
+    <div class="footer-info fade-in">
+      <p><i class="fa-solid fa-shield-halved me-2"></i>Secure Network Testing Platform</p>
+    </div>
+  </div>
+
+  <!-- Bootstrap & Local JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
