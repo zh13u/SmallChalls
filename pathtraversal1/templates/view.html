@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>View — {{ filename }} — MyFiles</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="brand"><div class="logo"></div> MyFiles</div>
+      <div class="row">
+        <button id="themeToggle" class="btn secondary" type="button">Light</button>
+        <a class="btn secondary" href="/">Back</a>
+        <a class="btn" href="/files?filename={{ filename }}&download=1">Download</a>
+      </div>
+    </div>
+    <div class="card">
+      <h1>{{ filename }}</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+          {% for c, m in messages %}
+            <li class="{{ c }}">{{ m }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      {% if kind == 'text' %}
+        <div class="viewer">
+          <pre class="code">{{ content }}</pre>
+        </div>
+      {% elif kind == 'image' %}
+        <div class="viewer">
+          <img class="image" src="/files?filename={{ filename }}" alt="{{ filename }}">
+        </div>
+      {% else %}
+        <div class="emptystate">Preview not available. Use Download to view this file.</div>
+      {% endif %}
+    </div>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
+
+

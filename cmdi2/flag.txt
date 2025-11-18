@@ -1,1 +1,1 @@
-GDUCTF{nonono?}
+flag{nonono?}
